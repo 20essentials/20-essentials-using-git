@@ -1,0 +1,127 @@
+<section class='container container-of-cursor'>
+  <div class='cursor'></div>
+</section>
+
+<style is:global>
+  .container {
+    --primary-color: #de4c36;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    background-color: #222;
+    overflow: hidden;
+    background-image: linear-gradient(
+        to right,
+        #333 0.0651vmax,
+        transparent 0.0651vmax
+      ),
+      linear-gradient(to bottom, #333 0.0651vmax, transparent 0.0651vmax);
+
+    background-size: 2.604vmax 2.604vmax;
+    cursor: none;
+    --drop-shadow: drop-shadow(0 0 0.326vmax var(--primary-color))
+      drop-shadow(0 0 0.978vmax var(--primary-color))
+      drop-shadow(0 0 2.278vmax var(--primary-color));
+
+    &:hover {
+      .cursor {
+        transform: translate(-0.065vmax, -0.326vmax) rotate(15deg) scale(1);
+      }
+    }
+
+    .cursor {
+      position: fixed;
+      width: 1.628vmax;
+      height: 1.628vmax;
+      border-top: 0.326vmax solid var(--primary-color);
+      border-left: 0.326vmax solid var(--primary-color);
+      transform: translate(-0.065vmax, -0.326vmax) rotate(15deg) scale(0);
+      transform-origin: top;
+      pointer-events: none;
+      transition: transform 0.1s ease;
+      filter: var(--drop-shadow);
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 0.326vmax;
+        height: 2.604vmax;
+        left: -0.163vmax;
+        background-color: var(--primary-color);
+        top: 0;
+        transform-origin: top;
+        transform: rotate(315deg);
+      }
+    }
+
+    .letter {
+      position: absolute;
+      color: var(--primary-color);
+      pointer-events: none;
+      width: 0.652vmax;
+      height: 0.652vmax;
+      font-size: 1.2vmax;
+      transition:
+        transform 1s ease,
+        opacity 1s ease;
+      filter: var(--drop-shadow);
+    }
+  }
+</style>
+
+<script>
+  import { $ } from '@/utils/functions';
+  const $cursor = $('.cursor') as HTMLElement;
+  const $container = $('.container-of-cursor') as HTMLElement;
+
+  function randomText() {
+    const text = 'abcdefghijklmnopqrstuvwxyz1234567890'.split('');
+    return text[Math.floor(Math.random() * text.length)];
+  }
+
+  function handleMove(x: number, y: number) {
+    $cursor.style.left = `${x}px`;
+    $cursor.style.top = `${y}px`;
+    $container.style.backgroundPositionX = `${x / -4}px`;
+    $container.style.backgroundPositionY = `${y / -4}px`;
+
+    const elementLetter = document.createElement('div');
+    elementLetter.classList.add('letter');
+    $container.prepend(elementLetter);
+    const { x: cursorX, y: cursorY } = $cursor.getBoundingClientRect();
+    elementLetter.style.left = `${cursorX}px`;
+    elementLetter.style.top = `${cursorY - 20}px`;
+
+    setTimeout(() => {
+      const firstLetter = elementLetter;
+      const dirX = Math.random() < 0.5 ? -1 : 1;
+      const dirY = Math.random() < 0.5 ? -1 : 1;
+      firstLetter.style.left = `${
+        parseInt(firstLetter.style.left) - dirX * (Math.random() * 150)
+      }px`;
+      firstLetter.style.top = `${
+        parseInt(firstLetter.style.top) - dirY * (Math.random() * 150)
+      }px`;
+      firstLetter.style.opacity = '0';
+      firstLetter.style.transform = `scale(0.25)`;
+      firstLetter.innerText = randomText();
+
+      setTimeout(() => {
+        firstLetter.remove();
+      }, 1000);
+    }, 10);
+  }
+
+  // Desktop
+  document.addEventListener('mousemove', e => {
+    handleMove(e.pageX, e.pageY);
+  });
+
+  // Mobile
+  document.addEventListener('touchmove', e => {
+    const touch = e.touches[0];
+    if (touch) {
+      handleMove(touch.pageX, touch.pageY);
+    }
+  });
+</script>

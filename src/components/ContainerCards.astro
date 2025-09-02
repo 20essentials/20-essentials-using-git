@@ -1,0 +1,296 @@
+---
+import { baseUrl } from '@/utils/functions';
+
+const arrayCards = [
+  {
+    title: 'Jonmircha Curso',
+    web: 'https://jonmircha.com/git',
+    localImage: '/assets/jonmircha-git.avif',
+    id: '001'
+  },
+  {
+    title: 'Git - la guía sencilla.',
+    web: 'http://rogerdudler.github.io/git-guide/index.es.html',
+    localImage: '/assets/guia-sencilla.avif',
+    id: '002'
+  },
+  {
+    title: 'Libro Pro Git',
+    web: 'https://git-scm.com/book/es/v2',
+    localImage: '/assets/libro-pro-git.avif',
+    id: '003'
+  },
+  {
+    title: 'Guías oficiales de GitHub',
+    web: 'https://docs.github.com/es',
+    localImage: '/assets/guia-github.avif',
+    id: '004'
+  },
+  {
+    title: 'Aprendiendo Git',
+    web: '/assets/aprendiendo-git.pdf',
+    localImage: '/assets/aprendiendo-git.avif',
+    id: '005'
+  },
+  {
+    title: 'Curso de GIT',
+    web: 'https://youtu.be/9ZJ-K-zk_Go?si=5DpZvFOPMSehB3T9',
+    localImage: '/assets/curso-de-git-de-dalto.avif',
+    id: '006'
+  },
+  {
+    title: 'Aportar a Proyectos',
+    web: 'https://youtu.be/niPExbK8lSw?si=_tvuDf04x4SEwTb3',
+    localImage: '/assets/aportar-a-proyectos.avif',
+    id: '007'
+  },
+  {
+    title: 'Curso Terminal',
+    web: 'https://youtu.be/Pi0KVD4xTbc?si=vmD7sohyl1nYY4nG',
+    localImage: '/assets/curso-terminal.avif',
+    id: '008'
+  },
+  {
+    title: 'Lite Documentation',
+    web: 'https://www.w3schools.com/git/git_staging_environment.asp?remote=github',
+    localImage: '/assets/w3schools-lite-git-doc.avif',
+    id: '009'
+  },
+  {
+    title: 'How to Write a Git Commit Message',
+    web: 'https://cbea.ms/git-commit/',
+    localImage: '/assets/how-to-write-a-git-commit-message.avif',
+    id: '010'
+  },
+  {
+    title: 'Git by example',
+    web: 'https://antonz.org/git-by-example/',
+    localImage: '/assets/git-by-example.avif',
+    id: '011'
+  },
+  {
+    title: '12 Most Common Git Commands',
+    web: '/assets/12-commands.mp4',
+    localImage: '/assets/12-git.avif',
+    id: '012'
+  },
+  {
+    title: 'Learn Git Branching',
+    web: 'https://learngitbranching.js.org/',
+    localImage: '/assets/learn-git-branching.avif',
+    id: '013'
+  },
+  {
+    title: 'Git y GitHub en empresas grandes',
+    web: '/assets/git-flujo.avif',
+    localImage: '/assets/git-flujo-landscape.avif',
+    id: '014'
+  },
+  {
+    title: 'CheatSheet',
+    web: '/assets/github-git-cheat-sheet.pdf',
+    localImage: '/assets/hoja-de-referencia.avif',
+    id: '015'
+  },
+  {
+    title: 'Git maintenance start',
+    web: '/assets/git-maintenance.avif',
+    localImage: '/assets/git-maintenance-landscape.avif',
+    id: '016'
+  },
+  {
+    title: 'Git Diagram',
+    web: '/assets/git-diagram.mp4',
+    localImage: '/assets/git-diagram-landscape.avif',
+    id: '017'
+  },
+  {
+    title: 'Ship Code',
+    web: '/assets/ship-code.mp4',
+    localImage: '/assets/ship-code.avif',
+    id: '018'
+  },
+  {
+    title: 'Chuleta',
+    web: '/assets/chuleta.avif',
+    localImage: '/assets/chuleta-landscape.avif',
+    id: '019'
+  },
+  {
+    title: 'Gitingest',
+    web: 'https://gitingest.com/',
+    localImage: '/assets/gitingest.avif',
+    id: '019'
+  }
+];
+
+const radios = Array.from({ length: arrayCards.length }, (_, i) => i + 1);
+let start = 2;
+const order = Array.from({ length: arrayCards.length }, (_, i) => {
+  if (i === 0) return start;
+  if (i === arrayCards.length - 1) return start - 1;
+  return start + i;
+});
+---
+
+<section class='am-section'>
+  {
+    radios.map(n => (
+      <input id={`c${n}`} type='radio' name='p' checked={n === 1} />
+    ))
+  }
+
+  {
+    order.map((val, i) => {
+      const { localImage, web, title } = arrayCards[i];
+      return (
+        <aside class='am-container-card' id={`p${i + 1}`}>
+          <div class='titulo'>#{i + 1}</div>
+          <label for={`c${val}`}>Next</label>
+          <a href={web} target='_blank' title={title}>
+            <img class='am-img' src={baseUrl(localImage)} alt={title} />
+          </a>
+        </aside>
+      );
+    })
+  }
+</section>
+
+<style>
+  .am-section {
+    min-height: 100vh;
+    z-index: 2;
+    width: 100%;
+    position: relative;
+    padding: 2vmax;
+
+    input {
+      accent-color: #de4c36;
+    }
+
+    .am-container-card {
+      display: none;
+      position: relative;
+      height: 92vh;
+
+      @media (width <= 1111px) and (orientation: landscape) {
+        height: 88vh;
+      }
+      
+      @media (width <= 1111px) and (orientation: portrait) {
+        height: 90vh;
+      }
+
+      .am-img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      div,
+      label {
+        position: absolute;
+      }
+
+      .titulo {
+        left: 1.6vmax;
+        bottom: 1.6vmax;
+        font-size: 2vmax;
+        color: #fff;
+        mix-blend-mode: exclusion;
+        z-index: 50;
+      }
+
+      label {
+        padding: 1.11vmax 2.6vmax;
+        letter-spacing: 0.1vmax;
+        font-size: 0.98vmax;
+        border-radius: 0.65vmax;
+        box-shadow: rgb(201, 46, 70) 0px 0.65vmax 0px 0px;
+        border: 0;
+        background-color: rgb(255, 56, 86);
+        transition: all 0.3s ease;
+        color: hsl(0, 0%, 100%);
+        cursor: pointer;
+        position: absolute;
+        right: -0.6vmax;
+        bottom: -0.6vmax;
+        z-index: 50;
+        user-select: none;
+      }
+
+      label:hover {
+        box-shadow: rgb(201, 46, 70) 0px 0.46vmax 0px 0px;
+      }
+
+      label:active {
+        background-color: rgb(255, 56, 86);
+        box-shadow: rgb(201, 46, 70) 0px 0px 0px 0px;
+        transform: translateY(0.33vmax);
+        transition: 200ms;
+      }
+    }
+
+    #c1:checked ~ #p1 {
+      display: block;
+    }
+    #c2:checked ~ #p2 {
+      display: block;
+    }
+    #c3:checked ~ #p3 {
+      display: block;
+    }
+    #c4:checked ~ #p4 {
+      display: block;
+    }
+    #c5:checked ~ #p5 {
+      display: block;
+    }
+    #c6:checked ~ #p6 {
+      display: block;
+    }
+    #c7:checked ~ #p7 {
+      display: block;
+    }
+    #c8:checked ~ #p8 {
+      display: block;
+    }
+    #c9:checked ~ #p9 {
+      display: block;
+    }
+    #c10:checked ~ #p10 {
+      display: block;
+    }
+    #c11:checked ~ #p11 {
+      display: block;
+    }
+    #c12:checked ~ #p12 {
+      display: block;
+    }
+    #c13:checked ~ #p13 {
+      display: block;
+    }
+    #c14:checked ~ #p14 {
+      display: block;
+    }
+    #c15:checked ~ #p15 {
+      display: block;
+    }
+    #c16:checked ~ #p16 {
+      display: block;
+    }
+    #c17:checked ~ #p17 {
+      display: block;
+    }
+    #c18:checked ~ #p18 {
+      display: block;
+    }
+    #c19:checked ~ #p19 {
+      display: block;
+    }
+    #c20:checked ~ #p20 {
+      display: block;
+    }
+  }
+</style>
