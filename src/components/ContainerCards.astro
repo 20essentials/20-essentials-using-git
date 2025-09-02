@@ -147,7 +147,7 @@ const order = Array.from({ length: arrayCards.length }, (_, i) => {
         <aside class='am-container-card' id={`p${i + 1}`}>
           <div class='titulo'>#{i + 1}</div>
           <label for={`c${val}`}>Next</label>
-          <a href={web} target='_blank' title={title}>
+          <a href={baseUrl(web)} target='_blank' title={title}>
             <img class='am-img' src={baseUrl(localImage)} alt={title} />
           </a>
         </aside>
