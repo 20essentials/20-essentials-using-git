@@ -7,6 +7,18 @@ import Layout from '@/layouts/Layout.astro';
 
 <Layout>
   <Background />
-  <Hero />
-  <ContainerCards />
+  <section class='am-your-container'>
+    <Hero />
+    <ContainerCards />
+  </section>
 </Layout>
+
+<style>
+  .am-your-container {
+    height: 200vh;
+
+    @media (width <= 1111px) and (orientation: portrait) {
+      height: 100vh;
+    }
+  }
+</style>

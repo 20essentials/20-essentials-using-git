@@ -10,7 +10,12 @@ const logo = baseUrl('/assets/git.svg');
 </section>
 <style>
   section {
+    position: relative;
     height: 100vh;
+
+    @media (width <= 1111px) and (orientation: portrait) {
+      height: 50vh;
+    }
   }
 
   @keyframes clippy {
@@ -29,6 +34,7 @@ const logo = baseUrl('/assets/git.svg');
     transform: translate(-50%, -50%);
     font-size: 4.8vmax;
     text-align: center;
+    user-select: none;
     text-wrap: balance;
     color: transparent;
     background-image: var(--gradient);
